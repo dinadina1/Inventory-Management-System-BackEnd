@@ -219,6 +219,35 @@ const userController = {
         message: err.message,
       });
     }
+  },
+
+  // logout user
+  logout: async (req, res) => {
+    try{
+
+      // clear token from cookie
+      res.clearCookie("authToken");
+
+      // return message
+      return res.status(200).json({message: "User logged out successfully"});
+
+    }catch(err){
+      return res.status(500).json({message: err.message});
+    }
+  },
+
+  // get current logged in user profile
+  profile: async (req, res) => {
+    try{
+
+      // find user data from db
+      const user = await User.findOne({_id: req.user.userId}).select(["-password","-__v","-resetCode","-resetCodeExpireIn"]);
+
+      return res.status(200).json(user);
+
+    }catch(err){
+      return res.status(500).json({message: err.message});
+    }
   }
 
 };

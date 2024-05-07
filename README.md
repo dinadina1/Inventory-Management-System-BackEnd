@@ -8,6 +8,7 @@
 - Login
 - forgot-password
 - reset-password
+- logout
 - view current logged in user
 
 ### products
