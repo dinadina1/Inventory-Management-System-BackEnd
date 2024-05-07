@@ -4,10 +4,11 @@
 
 >## users
 
-- signup
+- signup 
 - Login
 - forgot-password
 - reset-password
+- view current logged in user
 
 ### products
 
@@ -51,6 +52,7 @@
 - reset- password
 - password change
 - change user role
+- view current logged in user
 
 <hr>
 
