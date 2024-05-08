@@ -23,6 +23,8 @@ app.use(cors({
 
 // express routes
 app.use("/", require("./routes/users"));
+app.use("/purchase", require("./routes/purchase"));
+app.use("/vendor", require("./routes/vendor"));
 
 // export app
 module.exports = app;

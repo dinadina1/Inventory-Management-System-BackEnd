@@ -173,7 +173,8 @@ const userController = {
 
       // return message
       return res.status(200).json({
-        message: "Password reset link sent to your email", path: urlPath
+        message: "Password reset link sent to your email",
+        path: urlPath,
       });
     } catch (err) {
       return res.status(500).json({
@@ -185,14 +186,16 @@ const userController = {
   // reset password
   resetPassword: async (req, res) => {
     try {
-
-      const {resetCode} = req.params;
+      const { resetCode } = req.params;
 
       // find reset code in db
-      const user = await User.findOne({resetCode: resetCode, resetCodeExpireIn: {$gt: Date.now()}});
+      const user = await User.findOne({
+        resetCode: resetCode,
+        resetCodeExpireIn: { $gt: Date.now() },
+      });
 
       // return message if reset code expired
-      if(!user || user == null){
+      if (!user || user == null) {
         return res.status(400).json({
           message: "Reset code expired",
         });
@@ -213,8 +216,7 @@ const userController = {
       return res.status(200).json({
         message: "Password reset successfully",
       });
-
-    } catch(err){
+    } catch (err) {
       return res.status(500).json({
         message: err.message,
       });
@@ -223,34 +225,117 @@ const userController = {
 
   // logout user
   logout: async (req, res) => {
-    try{
-
+    try {
       // clear token from cookie
       res.clearCookie("authToken");
 
       // return message
-      return res.status(200).json({message: "User logged out successfully"});
+      return res.status(200).json({ message: "User logged out successfully" });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+
+  // get current logged in user profile
+  profile: async (req, res) => {
+    try {
+      // find user data from db
+      const user = await User.findOne({ _id: req.user.userId }).select([
+        "-password",
+        "-__v",
+        "-resetCode",
+        "-resetCodeExpireIn",
+      ]);
+
+      return res.status(200).json(user);
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+
+  // create new user by admin
+  createUser: async (req, res) => {
+    try {
+
+      // check if user already exist
+      const isUserExist = await User.findOne({ email: req.body.email });
+
+      // return message if user already exist
+      if (isUserExist) {
+        return res.status(400).json({
+          message: "User already exist",
+        });
+      }
+
+      // hash password
+      req.body.password = await bcrypt.hash(req.body.password, 10);
+
+      // create new user
+      const newUser = await User.create(req.body);
+
+      // return message
+      if (newUser) {
+        return res.status(200).json({
+          message: "User registered successfully",
+          data: newUser,
+        });
+      }
+
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+
+  // change all user and admin password by admin
+  changePassword: async (req, res) => {
+    try{
+
+      // check if user is exist
+      const user = await User.findOne({email: req.body.email});
+
+      // return message if user not found
+      if(!user){
+        return res.status(404).json({message: "User does not exists"});
+      }
+
+      // hash password
+      const hashPassword = await bcrypt.hash(req.body.password, 10);
+
+      // update new password in db
+      await User.updateOne({_id: user._id}, {password: hashPassword});
+
+      return res.status(200).json({message: "Password changed successfully"});
 
     }catch(err){
       return res.status(500).json({message: err.message});
     }
   },
 
-  // get current logged in user profile
-  profile: async (req, res) => {
+  // change role of user by admin
+  changeRole: async (req, res) => {
     try{
 
-      // find user data from db
-      const user = await User.findOne({_id: req.user.userId}).select(["-password","-__v","-resetCode","-resetCodeExpireIn"]);
+      // check if user is exist
+      const user = await User.findOne({email: req.body.email});
 
-      return res.status(200).json(user);
+      // return message if user not found
+      if(!user){
+        return res.status(404).json({message: "User does not exists"});
+      }
+
+      // update role in db
+      await User.updateOne({_id: user._id}, {role: req.body.role});
+
+      return res.status(200).json({message: "Role changed successfully"});
 
     }catch(err){
       return res.status(500).json({message: err.message});
     }
   }
 
-};
+
+  
+  };
 
 // export userController object
 module.exports = userController;

@@ -16,17 +16,15 @@ const isAuth = async (req, res, next) => {
     }
 
     // verify jwt token
-    const isTokenVerified = jwt.verify(token, SECRET_KEY);
-
-    // return messages if token verified or not
-    if (!isTokenVerified) {
+    jwt.verify(token, SECRET_KEY, (err, decoded) => {
       if (err) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
-    } else {
-      req.user = isTokenVerified;
-      next();
+        return res.status(401).json({ message: err.message });
     }
+       // return messages if token verified or not
+       req.user = decoded;
+       next();
+    });
+
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
