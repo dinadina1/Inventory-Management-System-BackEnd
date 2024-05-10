@@ -1,5 +1,7 @@
 # Inventory Management System BackEnd
 
+<p>API Documentation: https://documenter.getpostman.com/view/33767617/2sA3JM7gqC</p>
+<p>Render Base URL: https://inventory-qxcd.onrender.com</p>
 ## API EndPoints:
 
 >## users
