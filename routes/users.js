@@ -11,7 +11,6 @@ const isAdmin = require('../middleware/isAdmin');
 // require controller
 const userController = require('../controllers/userController');
 
-router.get('/', userController.test);
 router.post('/signup', userController.signup);
 router.post('/login', userController.login);
 router.post('/forgot-password',userController.forgotPassword);

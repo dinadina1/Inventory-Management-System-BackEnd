@@ -11,27 +11,34 @@ const vendorSchema = mongoose.Schema(
     companyName: {
       type: String,
       required: true,
+      lowercase: true
     },
     email: {
       type: String,
+      required:true,
+      lowercase: true
     },
     phoneNo: [(type = Number)],
     address: {
       street: {
         type: String,
         required: true,
+        lowercase: true
       },
       city: {
         type: String,
         required: true,
+        lowercase: true
       },
       state: {
         type: String,
         required: true,
+        lowercase: true
       },
       country: {
         type: String,
         required: true,
+        lowercase: true
       },
       pincode: {
         type: Number,
@@ -50,6 +57,10 @@ const vendorSchema = mongoose.Schema(
       immutable: true,
       default: Date.now,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false
+    }
   },
   { collection: "vendors" }
 );

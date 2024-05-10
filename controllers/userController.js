@@ -15,12 +15,6 @@ const { SECRET_KEY, PORT } = require("../utilities/config");
 
 // create userController object
 const userController = {
-  // test
-  test: (req, res) => {
-    res.status(200).json({
-      message: "User Controller Test",
-    });
-  },
 
   // Register new user
   signup: async (req, res) => {

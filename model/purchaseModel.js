@@ -22,20 +22,56 @@ const purchaseSchema = mongoose.Schema(
     },
     gstPercentage: {
       type: Number,
-      default: 18,
+      required: true
     },
     totalPrice: {
       type: Number,
-      required: true,
     },
     invoiceNo: {
       type: Number,
       required: true,
     },
+    orderDate: {
+      type: Date,
+      default: new Date().toISOString(),
+      required:true
+    },
+    deliveryDate: {
+      type: Date
+    },
     vendor: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "Vendors",
     },
+    createdBy: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
+    },
+    createdAt: {
+      type: Date,
+      immutable: true,
+      default: Date.now,
+    },
+    isPaid: {
+      type: Boolean,
+      default: false
+    },
+    deliveryStatus: {
+      type: String,
+      default: "pending"
+    },
+    paymentStatus: {
+      type: String,
+      default: "pending"
+    },
+    isDelivered: {
+      type: Boolean,
+      default: false
+    },
+    location: {
+      type: String,
+      required: true
+    }
   },
   { collection: "purchase" }
 );

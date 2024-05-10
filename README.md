@@ -4,30 +4,30 @@
 
 >## users
 
-- signup 
-- Login
-- forgot-password
-- reset-password
-- logout
-- view current logged in user
+- signup -
+- Login-
+- forgot-password-
+- reset-password-
+- logout-
+- view current logged in user-
 
 ### products
 
-- view all inventory products.
-- view all stocks.
-- view all orders
-- view all orders by date.
-- view all vendors.
-- view particular vendor details.
-- view all vendors by state.
-- view all vendors by city.
+- view all inventory products.-
+- view all stocks.-
+- view all purchase orders-
+- view all orders by date.-
+- view all vendors.-
+- view particular vendor details.-
+- view all vendors by state.-
+- view all vendors by city.-
 
 <hr>
 
-- view particular inventory product.
-- create new product.
-- update a product by product id.
-- delete particular product.
+- view particular inventory product.-
+- create new product.-
+- update a product by product id.-
+- delete particular product.-
 
 <hr>
 
@@ -48,12 +48,12 @@
 
 >## Admin
 
-- create new user with role
-- forgot-password
-- reset- password
-- password change
-- change user role
-- view current logged in user
+- create new user with role-
+- forgot-password-
+- reset- password-
+- password change-
+- change user role-
+- view current logged in user-
 
 <hr>
 
@@ -61,31 +61,31 @@
 
 ### products
 
-- view all inventory products.
+- view all inventory products.-
 - view all stocks.
-- view all orders
-- view all orders by date.
-- view all vendors.
-- view particular vendor details.
-- view all vendors by state.
-- view all vendors by city.
-- create new vendor.
-- update vendor.
-- delete vendor details.
+- view all purchase orders-
+- view all orders by date.-
+- view all vendors.-
+- view particular vendor details.-
+- view all vendors by state.-
+- view all vendors by city.-
+- create new vendor.-
+- update vendor.-
+- delete vendor details.-
 
 <hr>
 
-- create purchase order.
-- update purchase order.
-- view all purchase order.
-- delete a purchase order
+- create purchase order.-
+- update purchase order.-
+- view all purchase order.-
+- delete a purchase order-
 
 <hr>
 
-- view particular inventory product.
-- create new product.
-- update a product by product id.
-- delete particular product.
+- view particular inventory product.-
+- create new product.-
+- update a product by product id.-
+- delete particular product.-
 
 <hr>
 

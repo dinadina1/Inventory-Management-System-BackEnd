@@ -17,8 +17,12 @@ const productSchema = mongoose.Schema(
       required: true,
     },
     invoiceNo: {
-        type: mongoose.SchemaTypes.invoiceNo,
-        ref: "Purchase",
+        type: Number,
+        required: true
+    },
+    purchaseOrder: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "Purchase"
     },
     vendor: {
       type: mongoose.SchemaTypes.ObjectId,
@@ -33,13 +37,11 @@ const productSchema = mongoose.Schema(
       immutable: true,
       default: Date.now,
     },
-    purchase: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: "Purchase",
-    },
+
   },
   { collection: "products" }
 );
 
 // export schema
-module.exports = mongoose.model("Products", productSchema);
+module.exports = mongoose.model("Product", productSchema);
+
