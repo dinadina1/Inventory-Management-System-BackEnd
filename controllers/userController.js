@@ -127,7 +127,7 @@ const userController = {
       // Set password resetCode expiration time (5 minutes in milliseconds)
       const passwordResetCodeExpireIn = Date.now() + 300000;
 
-      const urlPath = `http://${req.hostname}:${PORT}${req.path}/${resetToken}`;
+      const urlPath = `http://localhost:5173/reset-password/${resetToken}`;
 
       // update reset code and reset code expire in db
       user.resetCode = resetToken;
