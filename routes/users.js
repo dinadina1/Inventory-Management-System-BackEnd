@@ -14,7 +14,7 @@ const userController = require('../controllers/userController');
 router.post('/signup', userController.signup);
 router.post('/login', userController.login);
 router.post('/forgot-password',userController.forgotPassword);
-router.post('/forgot-password/:resetCode', userController.resetPassword);
+router.post('/reset-password/:resetCode', userController.resetPassword);
 
 router.get('/profile', isAuth, userController.profile);
 router.get('/logout', isAuth, userController.logout);
