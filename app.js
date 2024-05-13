@@ -18,7 +18,8 @@ app.use(cookieParser());
 
 // use cors
 app.use(cors({
-    origin: '*'
+    origin: '*',
+    // origin: ['http://localhost:5173/reset-password/x8glukc6'];
 }));
 
 // express routes
