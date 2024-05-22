@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 // create product schema
 const purchaseSchema = mongoose.Schema(
   {
+    purchaseOrderNo: {
+      type: Number,
+      required: true,
+    },
     productItem: {
       type: String,
       required: true,
@@ -22,7 +26,7 @@ const purchaseSchema = mongoose.Schema(
     },
     gstPercentage: {
       type: Number,
-      required: true
+      required: true,
     },
     totalPrice: {
       type: Number,
@@ -34,10 +38,10 @@ const purchaseSchema = mongoose.Schema(
     orderDate: {
       type: Date,
       default: new Date().toISOString(),
-      required:true
+      required: true,
     },
     deliveryDate: {
-      type: Date
+      type: Date,
     },
     vendor: {
       type: mongoose.SchemaTypes.ObjectId,
@@ -54,24 +58,24 @@ const purchaseSchema = mongoose.Schema(
     },
     isPaid: {
       type: Boolean,
-      default: false
+      default: false,
     },
     deliveryStatus: {
       type: String,
-      default: "pending"
+      default: "pending",
     },
     paymentStatus: {
       type: String,
-      default: "pending"
+      default: "pending",
     },
     isDelivered: {
       type: Boolean,
-      default: false
+      default: false,
     },
     location: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   { collection: "purchase" }
 );

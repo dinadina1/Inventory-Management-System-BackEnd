@@ -43,6 +43,17 @@ const purchaseController = {
       if (purchase)
         return res.status(404).json({ message: "Invoice no already exist" });
 
+      // check if purchase order no already exist
+      const purchaseOrder = await Purchase.findOne({
+        purchaseOrderNo: req.body.purchaseOrderNo,
+      });
+
+      // return message if purchase order number exist
+      if (purchaseOrder)
+        return res
+          .status(404)
+          .json({ message: "Purchase order no already exist" });
+
       // insert data in db
       const newPurchase = await Purchase.create(req.body);
 
@@ -82,6 +93,24 @@ const purchaseController = {
       const purchase = await Purchase.find().populate(["vendor", "createdBy"]);
 
       if (purchase.length === 0)
+        return res.status(500).json({ message: "No purchase order found" });
+
+      // return message
+      return res.status(200).json(purchase);
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+
+  //   view all purchase order by id
+  viewPurchaseOrderById: async (req, res) => {
+    try {
+      // get all purchase order
+      const purchase = await Purchase.findOne({
+        _id: req.params.purchaseId,
+      }).populate(["vendor", "createdBy"]);
+
+      if (!purchase)
         return res.status(500).json({ message: "No purchase order found" });
 
       // return message
@@ -348,7 +377,6 @@ const purchaseController = {
   // Generate turnover report
   turnoverExcel: async (req, res) => {
     try {
-
       // get all stocks
       const stock = await Purchase.find({ deliveryStatus: "pending" }).populate(
         ["vendor", "createdBy"]
@@ -378,7 +406,8 @@ const purchaseController = {
         0
       );
 
-      turnOver.tot_PurchasedPrice = turnOver.tot_StockPrice + turnOver.tot_DeliveredPrice;
+      turnOver.tot_PurchasedPrice =
+        turnOver.tot_StockPrice + turnOver.tot_DeliveredPrice;
 
       // Calculate stock total quantity
       turnOver.tot_StockQuantity = stock.reduce(
@@ -392,13 +421,16 @@ const purchaseController = {
         0
       );
 
-      turnOver.tot_PurchaseQty = turnOver.tot_StockQuantity + turnOver.tot_DeliveredQuantity;
+      turnOver.tot_PurchaseQty =
+        turnOver.tot_StockQuantity + turnOver.tot_DeliveredQuantity;
       turnOver.gstPercentage = 18;
 
-      turnOver.tot_gstAmount = (turnOver.tot_PurchasedPrice / 100) *18;
+      turnOver.tot_gstAmount = (turnOver.tot_PurchasedPrice / 100) * 18;
       turnOver.profit = (turnOver.tot_PurchasedPrice / 100) * 40;
 
-      turnOver.year = `${new Date().getFullYear()}-${new Date().getFullYear()+1}`;
+      turnOver.year = `${new Date().getFullYear()}-${
+        new Date().getFullYear() + 1
+      }`;
 
       // create new Excel workbook
       const workbook = new exceljs.Workbook();
@@ -457,7 +489,66 @@ const purchaseController = {
           }, 5000);
         }
       });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
 
+  // turnover
+  turnover: async (req, res) => {
+    try {
+      // get all stocks
+      const stock = await Purchase.find({ deliveryStatus: "pending" }).populate(
+        ["vendor", "createdBy"]
+      );
+
+      // get all delivered
+      const delivered = await Purchase.find({
+        deliveryStatus: "success",
+      }).populate(["vendor", "createdBy"]);
+
+      // return messages if purchase order not found
+      if (stock.length === 0)
+        return res.status(500).json({ message: "No purchase order found" });
+
+      // turnover object
+      const turnOver = {};
+
+      // Calculate stock total unit price
+      turnOver.tot_StockPrice = stock.reduce(
+        (acc, data) => acc + data.totalPrice,
+        0
+      );
+
+      // Calculate delivered total unit price
+      turnOver.tot_DeliveredPrice = delivered.reduce(
+        (acc, data) => acc + data.totalPrice,
+        0
+      );
+
+      turnOver.tot_PurchasedPrice =
+        turnOver.tot_StockPrice + turnOver.tot_DeliveredPrice;
+
+      // Calculate stock total quantity
+      turnOver.tot_StockQuantity = stock.reduce(
+        (acc, data) => acc + data.quantity,
+        0
+      );
+
+      // Calculate delivered total quantity
+      turnOver.tot_DeliveredQuantity = delivered.reduce(
+        (acc, data) => acc + data.quantity,
+        0
+      );
+
+      turnOver.tot_PurchaseQty =
+        turnOver.tot_StockQuantity + turnOver.tot_DeliveredQuantity;
+      turnOver.gstPercentage = 18;
+
+      turnOver.tot_gstAmount = (turnOver.tot_PurchasedPrice / 100) * 18;
+      turnOver.profit = (turnOver.tot_PurchasedPrice / 100) * 40;
+
+      return res.status(200).json(turnOver);
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }

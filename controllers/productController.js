@@ -74,7 +74,10 @@ const productController = {
   getProduct: async (req, res) => {
     try {
       // get product
-      const product = await Product.findById(req.params.productId);
+      const product = await Product.findById(req.params.productId).populate([
+        "vendor",
+        "purchaseOrder",
+      ]);
 
       // retutn message if product not found
       if (!product)
@@ -99,7 +102,6 @@ const productController = {
 
       // return message
       return res.status(200).json(product);
-
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }

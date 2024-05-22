@@ -8,7 +8,8 @@ const { PORT, MONGO_URI } = require("./utilities/config");
 const mongoose = require("mongoose");
 
 // connect to MongoDB
-mongoose.connect(MONGO_URI)
+mongoose
+  .connect(MONGO_URI)
   .then(() => {
     console.log("Connected to MongoDB");
 

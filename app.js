@@ -1,14 +1,14 @@
 // require express
-const express = require('express');
+const express = require("express");
 
 // create instance of express
 const app = express();
 
 // require cors
-const cors = require('cors');
+const cors = require("cors");
 
 // require cookie parser
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 
 // use body parser
 app.use(express.json());
@@ -17,10 +17,13 @@ app.use(express.json());
 app.use(cookieParser());
 
 // use cors
-app.use(cors({
-    origin: '*',
-    // origin: ['http://localhost:5173'];
-}));
+app.use(
+  cors({
+    // origin: '*',
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
 
 // express routes
 app.use("/", require("./routes/users"));

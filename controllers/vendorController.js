@@ -3,7 +3,6 @@ const Vendor = require("../model/vendorModel");
 
 // create vendor controller object
 const vendorController = {
-
   // register new vendor
   register: async (req, res) => {
     try {
@@ -78,7 +77,9 @@ const vendorController = {
   all: async (req, res) => {
     try {
       // find all vendors in db
-      const vendor = await Vendor.find({ isDeleted: false }).populate("createdBy");
+      const vendor = await Vendor.find({ isDeleted: false }).populate(
+        "createdBy"
+      );
 
       // return vendor
       return res.status(200).json(vendor);
@@ -87,7 +88,7 @@ const vendorController = {
     }
   },
 
-  // view particular vendor
+  // // view particular vendor
   getVendor: async (req, res) => {
     try {
       // find all vendors in db
@@ -129,8 +130,8 @@ const vendorController = {
     }
   },
 
-   // view all vendors in city
-   vendorCityWise: async (req, res) => {
+  // view all vendors in city
+  vendorCityWise: async (req, res) => {
     try {
       // find all vendors in db
       const vendors = await Vendor.find({

@@ -8,7 +8,8 @@ const { SECRET_KEY } = require("../utilities/config");
 const isAuth = async (req, res, next) => {
   try {
     // get authToken from cookie
-    const token = req.cookies.authToken;
+    const token = req.cookies.authToken || req.headers.authorization;
+    // const token = req.headers.authorization;
 
     // return message if token not found
     if (!token) {
@@ -19,12 +20,11 @@ const isAuth = async (req, res, next) => {
     jwt.verify(token, SECRET_KEY, (err, decoded) => {
       if (err) {
         return res.status(401).json({ message: err.message });
-    }
-       // return messages if token verified or not
-       req.user = decoded;
-       next();
+      }
+      // return messages if token verified or not
+      req.user = decoded;
+      next();
     });
-
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }

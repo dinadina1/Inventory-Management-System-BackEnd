@@ -11,34 +11,36 @@ const vendorSchema = mongoose.Schema(
     companyName: {
       type: String,
       required: true,
-      lowercase: true
+      lowercase: true,
     },
     email: {
       type: String,
-      required:true,
-      lowercase: true
+      required: true,
+      lowercase: true,
     },
-    phoneNo: [(type = Number)],
+    phoneNo: {
+      type: Number,
+    },
     address: {
       street: {
         type: String,
         required: true,
-        lowercase: true
+        lowercase: true,
       },
       city: {
         type: String,
         required: true,
-        lowercase: true
+        lowercase: true,
       },
       state: {
         type: String,
         required: true,
-        lowercase: true
+        lowercase: true,
       },
       country: {
         type: String,
         required: true,
-        lowercase: true
+        lowercase: true,
       },
       pincode: {
         type: Number,
@@ -59,8 +61,8 @@ const vendorSchema = mongoose.Schema(
     },
     isDeleted: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   { collection: "vendors" }
 );
