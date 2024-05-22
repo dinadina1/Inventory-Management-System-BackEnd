@@ -19,8 +19,7 @@ app.use(cookieParser());
 // use cors
 app.use(
   cors({
-    // origin: '*',
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "https://inventorymangement.netlify.app"],
     credentials: true,
   })
 );
